@@ -42,4 +42,12 @@ public class ResourceExceptionHandler {
                 fornecedorNaoEncontradoException.getMessage(), LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
+
+    @ExceptionHandler(CategoriaNaoEncontrada.class)
+    public ResponseEntity<ErrorResponse> handlerCategoriaNaoEncontrada(CategoriaNaoEncontrada categoriaNaoEncontrada) {
+
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(),
+                categoriaNaoEncontrada.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
 }
