@@ -43,8 +43,8 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
-    @ExceptionHandler(CategoriaNaoEncontrada.class)
-    public ResponseEntity<ErrorResponse> handlerCategoriaNaoEncontrada(CategoriaNaoEncontrada categoriaNaoEncontrada) {
+    @ExceptionHandler(CategoriaNaoEncontradaException.class)
+    public ResponseEntity<ErrorResponse> handlerCategoriaNaoEncontrada(CategoriaNaoEncontradaException categoriaNaoEncontrada) {
 
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(),
                 categoriaNaoEncontrada.getMessage(), LocalDateTime.now());

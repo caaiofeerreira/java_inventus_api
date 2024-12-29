@@ -28,6 +28,10 @@ public class Produto {
     private Usuario usuario;
 
     private String nome;
+
+    @Column(name = "codigo_produto", unique = true)
+    private String codigoProduto;
+
     private Integer quantidade;
     private String unidadeMedida;
     private BigDecimal precoCompra;

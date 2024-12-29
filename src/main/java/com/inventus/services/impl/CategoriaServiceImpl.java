@@ -6,7 +6,7 @@ import com.inventus.domain.dto.CategoriaDto;
 import com.inventus.domain.usuario.UserRole;
 import com.inventus.domain.usuario.Usuario;
 import com.inventus.infra.exception.AcessoRestritoException;
-import com.inventus.infra.exception.CategoriaNaoEncontrada;
+import com.inventus.infra.exception.CategoriaNaoEncontradaException;
 import com.inventus.infra.security.TokenService;
 import com.inventus.repositories.CategoriaRepository;
 import com.inventus.services.CategoriaService;
@@ -53,7 +53,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         List<Categoria> categorias = categoriaRepository.findAll();
 
         if (categorias.isEmpty()) {
-            throw new CategoriaNaoEncontrada("Lista de Categorias vazia.");
+            throw new CategoriaNaoEncontradaException("Lista de Categorias vazia.");
         }
 
         return categorias.stream()
@@ -67,7 +67,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         tokenService.getUserFromToken(token);
 
         Categoria categoria = categoriaRepository.findById(id)
-                .orElseThrow(() -> new CategoriaNaoEncontrada("Categoria não encontrada."));
+                .orElseThrow(() -> new CategoriaNaoEncontradaException("Categoria não encontrada."));
 
         return new CategoriaDto(categoria);
     }
