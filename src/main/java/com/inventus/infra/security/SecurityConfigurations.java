@@ -30,7 +30,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers("/api/inventus/cadastrar-usuario").permitAll();
                     req.requestMatchers("/api/inventus/login").permitAll();
-                    req.requestMatchers("/api/inventus/estoque").authenticated();
+                    req.requestMatchers("/api/inventus/estoque/**").authenticated();
                     req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
                     req.anyRequest().authenticated();
                 })
