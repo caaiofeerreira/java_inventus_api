@@ -51,6 +51,14 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
+    @ExceptionHandler(ProdutoNaoEncontradoException.class)
+    public ResponseEntity<ErrorResponse> handlerProdutoNaoEncontrado(ProdutoNaoEncontradoException produtoNaoEncontradoException) {
+
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(),
+                produtoNaoEncontradoException.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
     @ExceptionHandler(ValidarCadastroException.class)
     public ResponseEntity<ErrorResponse> handlerValidarCadastro(ValidarCadastroException validarCadastroException) {
 

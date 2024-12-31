@@ -11,6 +11,7 @@ import com.inventus.domain.usuario.Usuario;
 import com.inventus.infra.exception.AcessoRestritoException;
 import com.inventus.infra.exception.CategoriaNaoEncontradaException;
 import com.inventus.infra.exception.FornecedorNaoEncontradoException;
+import com.inventus.infra.exception.ProdutoNaoEncontradoException;
 import com.inventus.infra.security.TokenService;
 import com.inventus.repositories.CategoriaRepository;
 import com.inventus.repositories.FornecedorRepository;
@@ -21,7 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
@@ -42,6 +45,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     private TokenService tokenService;
 
     @Override
+    @Transactional
     public ProdutoDto cadastrarProduto(String token, CadastrarProdutoDto cadastrarProdutoDto) {
 
         Usuario usuario = tokenService.getUserFromToken(token);
@@ -82,5 +86,31 @@ public class ProdutoServiceImpl implements ProdutoService {
                 cadastrarProdutoDto.motivo());
 
         return new ProdutoDto(novoProduto);
+    }
+
+    @Override
+    public List<ProdutoDto> listarProdutos(String token) {
+
+        tokenService.getUserFromToken(token);
+
+        List<Produto> produtos = produtoRepository.findAll();
+
+        if (produtos.isEmpty()) {
+            throw new ProdutoNaoEncontradoException("Lista de produtos esta vazia.");
+        }
+
+        return produtos.stream()
+                .map(ProdutoDto::new)
+                .toList();
+    }
+
+    @Override
+    public ProdutoDto buscarProduto(String token, Long id) {
+
+        tokenService.getUserFromToken(token);
+
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new ProdutoNaoEncontradoException("Produto nao encontrado."));
+        return new ProdutoDto(produto);
     }
 }

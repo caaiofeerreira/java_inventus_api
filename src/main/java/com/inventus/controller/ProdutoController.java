@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/inventus/estoque/produtos")
 public class ProdutoController {
@@ -23,5 +25,22 @@ public class ProdutoController {
 
         ProdutoDto produtoDto = produtoService.cadastrarProduto(token, cadastrarProdutoDto);
         return ResponseEntity.status(HttpServletResponse.SC_CREATED).body(produtoDto);
+    }
+
+    @GetMapping("/listar")
+    @PreAuthorize("hasRole('ADMIN','SUPERVISOR', 'FUNCIONARIO')")
+    public ResponseEntity<List<ProdutoDto>> listar(@RequestHeader("Authorization") String token) {
+
+        List<ProdutoDto> produtos = produtoService.listarProdutos(token);
+        return ResponseEntity.ok(produtos);
+    }
+
+    @GetMapping("/buscar/{id}")
+    @PreAuthorize("hasRole('ADMIN','SUPERVISOR', 'FUNCIONARIO')")
+    public ResponseEntity<ProdutoDto> buscarID(@RequestHeader("Authorization") String token,
+                                               @PathVariable Long id) {
+
+        ProdutoDto produto = produtoService.buscarProduto(token, id);
+        return ResponseEntity.ok(produto);
     }
 }
