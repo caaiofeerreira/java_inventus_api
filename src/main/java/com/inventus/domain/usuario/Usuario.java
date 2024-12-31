@@ -43,6 +43,21 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    public static Usuario criarUsuario(String nome, String email, String senha, String telefone,
+                                       UserRole userRole, LocalDate dataCadastro, Status status) {
+
+        Usuario usuario = new Usuario();
+        usuario.setNome(nome);
+        usuario.setEmail(email);
+        usuario.setSenha(senha);
+        usuario.setTelefone(telefone);
+        usuario.setUserRole(userRole);
+        usuario.setDataCadastro(dataCadastro);
+        usuario.setStatus(status);
+
+        return usuario;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + userRole.name()));

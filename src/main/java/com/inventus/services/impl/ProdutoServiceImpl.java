@@ -54,28 +54,25 @@ public class ProdutoServiceImpl implements ProdutoService {
             throw new AcessoRestritoException("Apenas ADMIN podem acessar esse serviço.");
         }
 
-        Produto produto = new Produto();
-        produto.setUsuario(usuario);
-        produto.setNome(cadastrarProdutoDto.nome());
-        produto.setCodigoProduto(cadastrarProdutoDto.codigoProduto());
-        produto.setQuantidade(cadastrarProdutoDto.quantidade());
-        produto.setUnidadeMedida(cadastrarProdutoDto.unidadeMedida());
-        produto.setPrecoCompra(cadastrarProdutoDto.precoCompra());
-        produto.setDescricao(cadastrarProdutoDto.descricao());
-
         Categoria categoria = categoriaRepository
                 .findById(cadastrarProdutoDto.categoriaId())
                 .orElseThrow(() -> new CategoriaNaoEncontradaException("Categoria não encontrada."));
-
 
         Fornecedor fornecedor = fornecedorRepository
                 .findById(cadastrarProdutoDto.fornecedorId())
                 .orElseThrow(() -> new FornecedorNaoEncontradoException("Fornecedor não encontrado."));
 
-        produto.setCategoria(categoria);
-        produto.setFornecedor(fornecedor);
-        produto.setDataCadastro(LocalDate.now());
-        produto.setStatus(Status.ATIVO);
+        Produto produto = Produto.criarProduto(
+                usuario,
+                cadastrarProdutoDto.nome(),
+                cadastrarProdutoDto.codigoProduto(),
+                cadastrarProdutoDto.quantidade(),
+                cadastrarProdutoDto.unidadeMedida(),
+                cadastrarProdutoDto.precoCompra(),
+                cadastrarProdutoDto.descricao(),
+                categoria,
+                fornecedor
+        );
 
         Produto novoProduto = produtoRepository.save(produto);
 
@@ -83,7 +80,8 @@ public class ProdutoServiceImpl implements ProdutoService {
                 usuario,
                 novoProduto,
                 cadastrarProdutoDto.quantidade(),
-                cadastrarProdutoDto.motivo());
+                cadastrarProdutoDto.motivo()
+        );
 
         return new ProdutoDto(novoProduto);
     }

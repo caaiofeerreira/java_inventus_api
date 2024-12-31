@@ -36,9 +36,10 @@ public class CategoriaServiceImpl implements CategoriaService {
             throw new AcessoRestritoException("Apenas ADMIN podem acessar esse serviço.");
         }
 
-        Categoria categoria = new Categoria();
-        categoria.setNome(cadastrarCategoriaDto.nome());
-        categoria.setDescricao(cadastrarCategoriaDto.descricao());
+        Categoria categoria = Categoria.criarCategoria(
+                cadastrarCategoriaDto.nome(),
+                cadastrarCategoriaDto.descricao()
+        );
 
         Categoria novaCategoria = categoriaRepository.save(categoria);
 

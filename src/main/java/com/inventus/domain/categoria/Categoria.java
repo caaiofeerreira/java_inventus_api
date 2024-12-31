@@ -18,4 +18,13 @@ public class Categoria {
 
     private String nome;
     private String descricao;
+
+    public static Categoria criarCategoria(String nome, String descricao) {
+
+        Categoria categoria = new Categoria();
+        categoria.setNome(nome);
+        categoria.setDescricao(descricao);
+
+        return categoria;
+    }
 }

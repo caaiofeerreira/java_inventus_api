@@ -23,16 +23,15 @@ public class MovimentoEstoqueServiceImpl implements MovimentoEstoqueService {
     @Transactional
     public void registrarEntrada(Usuario usuario, Produto produto, Integer quantidade, String motivo) {
 
-        MovimentoEstoque movimentoEstoque = new MovimentoEstoque();
-        movimentoEstoque.setUsuarioId(usuario);
-        movimentoEstoque.setProduto(produto);
-        movimentoEstoque.setQuantidade(quantidade);
-        movimentoEstoque.setTipoMovimento(TipoMovimento.ENTRADA);
-        movimentoEstoque.setDataMovimento(LocalDateTime.now());
-        movimentoEstoque.setMotivo(motivo);
+        MovimentoEstoque movimentoEstoque = MovimentoEstoque.criarMovimento(
+                usuario,
+                produto,
+                quantidade,
+                TipoMovimento.ENTRADA,
+                LocalDateTime.now(),
+                motivo
+        );
 
         movimentoEstoqueRepository.save(movimentoEstoque);
-
-        new MovimentoEstoqueDto(movimentoEstoque);
     }
 }

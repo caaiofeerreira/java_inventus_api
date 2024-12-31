@@ -49,4 +49,23 @@ public class Produto {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    public static Produto criarProduto(Usuario usuario, String nome, String codigoProduto, Integer quantidade,
+                                       String unidadeMedida, BigDecimal precoCompra, String descricao,
+                                       Categoria categoria, Fornecedor fornecedor) {
+
+        Produto produto = new Produto();
+        produto.setUsuario(usuario);
+        produto.setNome(nome);
+        produto.setCodigoProduto(codigoProduto);
+        produto.setQuantidade(quantidade);
+        produto.setUnidadeMedida(unidadeMedida);
+        produto.setPrecoCompra(precoCompra);
+        produto.setDescricao(descricao);
+        produto.setCategoria(categoria);
+        produto.setFornecedor(fornecedor);
+        produto.setDataCadastro(LocalDate.now());
+        produto.setStatus(Status.ATIVO);
+        return produto;
+    }
 }

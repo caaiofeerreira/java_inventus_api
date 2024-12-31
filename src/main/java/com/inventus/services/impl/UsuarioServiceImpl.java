@@ -48,15 +48,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         String senha = passwordEncoder.encode(cadastrarUsuarioDto.senha());
 
-        Usuario usuario = new Usuario();
-
-        usuario.setNome(cadastrarUsuarioDto.nome());
-        usuario.setEmail(cadastrarUsuarioDto.email());
-        usuario.setSenha(senha);
-        usuario.setTelefone(cadastrarUsuarioDto.telefone().replace(" ", ""));
-        usuario.setUserRole(cadastrarUsuarioDto.userRole());
-        usuario.setDataCadastro(LocalDate.now());
-        usuario.setStatus(Status.ATIVO);
+        Usuario usuario = Usuario.criarUsuario(
+                cadastrarUsuarioDto.nome(),
+                cadastrarUsuarioDto.email(),
+                senha,
+                cadastrarUsuarioDto.telefone().replace(" ", ""),
+                cadastrarUsuarioDto.userRole(),
+                LocalDate.now(),
+                Status.ATIVO
+        );
 
         Usuario novoUsuario = usuarioRepository.save(usuario);
 

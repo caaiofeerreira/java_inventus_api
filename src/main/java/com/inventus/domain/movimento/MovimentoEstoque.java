@@ -35,4 +35,18 @@ public class MovimentoEstoque {
 
     private LocalDateTime dataMovimento;
     private String motivo;
+
+    public static MovimentoEstoque criarMovimento(Usuario usuario, Produto produto, Integer quantidade,
+                                                  TipoMovimento tipoMovimento, LocalDateTime dataMovimento, String motivo) {
+
+        MovimentoEstoque movimentoEstoque = new MovimentoEstoque();
+        movimentoEstoque.setUsuarioId(usuario);
+        movimentoEstoque.setProduto(produto);
+        movimentoEstoque.setQuantidade(quantidade);
+        movimentoEstoque.setTipoMovimento(tipoMovimento);
+        movimentoEstoque.setDataMovimento(dataMovimento);
+        movimentoEstoque.setMotivo(motivo);
+
+        return movimentoEstoque;
+    }
 }

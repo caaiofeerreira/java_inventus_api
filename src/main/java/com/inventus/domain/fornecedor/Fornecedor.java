@@ -28,4 +28,19 @@ public class Fornecedor {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    public static Fornecedor criarFornecedor(String nome, String cnpj, String endereco, String telefone,
+                                             String email, LocalDate dataCadastro, Status status) {
+
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setNome(nome);
+        fornecedor.setCnpj(cnpj);
+        fornecedor.setEndereco(endereco);
+        fornecedor.setTelefone(telefone);
+        fornecedor.setEmail(email);
+        fornecedor.setDataCadastro(dataCadastro);
+        fornecedor.setStatus(status);
+
+        return fornecedor;
+    }
 }

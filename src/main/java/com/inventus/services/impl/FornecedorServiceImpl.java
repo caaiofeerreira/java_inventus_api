@@ -37,14 +37,15 @@ public class FornecedorServiceImpl implements FornecedorService {
             throw new AcessoRestritoException("Apenas ADMIN podem acessar esse serviço.");
         }
 
-        Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setNome(cadastrarFornecedorDto.nome());
-        fornecedor.setCnpj(cadastrarFornecedorDto.cnpj());
-        fornecedor.setEndereco(cadastrarFornecedorDto.endereco());
-        fornecedor.setEmail(cadastrarFornecedorDto.email());
-        fornecedor.setTelefone(cadastrarFornecedorDto.telefone());
-        fornecedor.setDataCadastro(LocalDate.now());
-        fornecedor.setStatus(Status.ATIVO);
+        Fornecedor fornecedor = Fornecedor.criarFornecedor(
+                cadastrarFornecedorDto.nome(),
+                cadastrarFornecedorDto.cnpj(),
+                cadastrarFornecedorDto.endereco(),
+                cadastrarFornecedorDto.telefone(),
+                cadastrarFornecedorDto.email(),
+                LocalDate.now(),
+                Status.ATIVO
+        );
 
         fornecedorRepository.save(fornecedor);
 
