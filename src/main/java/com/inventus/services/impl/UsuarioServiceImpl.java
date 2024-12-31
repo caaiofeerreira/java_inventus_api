@@ -10,6 +10,7 @@ import com.inventus.infra.security.DadosTokenJWT;
 import com.inventus.infra.security.TokenService;
 import com.inventus.repositories.UsuarioRepository;
 import com.inventus.services.UsuarioService;
+import com.inventus.services.validacoes.ValidarUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -36,19 +37,24 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private ValidarUsuario validarUsuario;
+
     @Override
     @Transactional
-    public UsuarioDto cadastrarUsuario(CadastrarUsuarioDto usuarioDto) {
+    public UsuarioDto cadastrarUsuario(CadastrarUsuarioDto cadastrarUsuarioDto) {
 
-        String senha = passwordEncoder.encode(usuarioDto.senha());
+        validarUsuario.validar(cadastrarUsuarioDto);
+
+        String senha = passwordEncoder.encode(cadastrarUsuarioDto.senha());
 
         Usuario usuario = new Usuario();
 
-        usuario.setNome(usuarioDto.nome());
-        usuario.setEmail(usuarioDto.email());
+        usuario.setNome(cadastrarUsuarioDto.nome());
+        usuario.setEmail(cadastrarUsuarioDto.email());
         usuario.setSenha(senha);
-        usuario.setTelefone(usuarioDto.telefone().replace(" ", ""));
-        usuario.setUserRole(usuarioDto.userRole());
+        usuario.setTelefone(cadastrarUsuarioDto.telefone().replace(" ", ""));
+        usuario.setUserRole(cadastrarUsuarioDto.userRole());
         usuario.setDataCadastro(LocalDate.now());
         usuario.setStatus(Status.ATIVO);
 
