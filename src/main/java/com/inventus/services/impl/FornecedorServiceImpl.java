@@ -11,6 +11,7 @@ import com.inventus.infra.exception.FornecedorNaoEncontradoException;
 import com.inventus.infra.security.TokenService;
 import com.inventus.repositories.FornecedorRepository;
 import com.inventus.services.FornecedorService;
+import com.inventus.services.validations.ValidarFornecedor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,9 @@ public class FornecedorServiceImpl implements FornecedorService {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private ValidarFornecedor validarFornecedor;
+
     @Override
     @Transactional
     public FornecedorDto cadastrarFornecedor(String token, CadastrarFornecedorDto cadastrarFornecedorDto) {
@@ -36,6 +40,8 @@ public class FornecedorServiceImpl implements FornecedorService {
         if (usuario.getUserRole() != UserRole.ADMIN) {
             throw new AcessoRestritoException("Apenas ADMIN podem acessar esse serviço.");
         }
+
+        validarFornecedor.validar(cadastrarFornecedorDto);
 
         Fornecedor fornecedor = Fornecedor.criarFornecedor(
                 cadastrarFornecedorDto.nome(),

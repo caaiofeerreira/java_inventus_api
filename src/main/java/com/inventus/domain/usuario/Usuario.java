@@ -50,7 +50,7 @@ public class Usuario implements UserDetails {
         usuario.setNome(nome);
         usuario.setEmail(email);
         usuario.setSenha(senha);
-        usuario.setTelefone(telefone);
+        usuario.setTelefone(telefone.replace(" ",""));
         usuario.setUserRole(userRole);
         usuario.setDataCadastro(dataCadastro);
         usuario.setStatus(status);

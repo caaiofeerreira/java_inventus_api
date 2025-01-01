@@ -10,7 +10,7 @@ import com.inventus.infra.security.DadosTokenJWT;
 import com.inventus.infra.security.TokenService;
 import com.inventus.repositories.UsuarioRepository;
 import com.inventus.services.UsuarioService;
-import com.inventus.services.validacoes.ValidarUsuario;
+import com.inventus.services.validations.ValidarUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -52,7 +52,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 cadastrarUsuarioDto.nome(),
                 cadastrarUsuarioDto.email(),
                 senha,
-                cadastrarUsuarioDto.telefone().replace(" ", ""),
+                cadastrarUsuarioDto.telefone(),
                 cadastrarUsuarioDto.userRole(),
                 LocalDate.now(),
                 Status.ATIVO

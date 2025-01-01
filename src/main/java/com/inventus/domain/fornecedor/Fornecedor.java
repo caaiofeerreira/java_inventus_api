@@ -36,7 +36,7 @@ public class Fornecedor {
         fornecedor.setNome(nome);
         fornecedor.setCnpj(cnpj);
         fornecedor.setEndereco(endereco);
-        fornecedor.setTelefone(telefone);
+        fornecedor.setTelefone(telefone.replace(" ", ""));
         fornecedor.setEmail(email);
         fornecedor.setDataCadastro(dataCadastro);
         fornecedor.setStatus(status);
