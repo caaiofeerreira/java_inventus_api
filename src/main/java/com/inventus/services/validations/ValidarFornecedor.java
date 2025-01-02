@@ -13,6 +13,8 @@ public class ValidarFornecedor {
 
     @Autowired
     private FornecedorRepository fornecedorRepository;
+
+    private static final String NOME_REGEX = "[A-Za-z0-9 ]+";
     private static final String TELEFONE_REGEX = "^\\(\\d{2}\\) \\d{4,5}-\\d{4}$";
     private static final String CNPJ_REGEX = "^\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}$";
     private static final EmailValidator emailValidator = EmailValidator.getInstance();
@@ -31,8 +33,8 @@ public class ValidarFornecedor {
 
         String nome = cadastrarFornecedorDto.nome().trim().toLowerCase();
 
-        if (nome.isEmpty()) {
-            throw new ValidarCadastroException("O nome é obrigatorio.");
+        if (nome.isEmpty() || !nome.matches(NOME_REGEX)) {
+            throw new ValidarCadastroException("O nome do fornecedor é obrigatório e deve conter apenas letras, números e espaços.");
         }
 
         fornecedorRepository.findByNomeFornecedor(nome)
@@ -46,10 +48,15 @@ public class ValidarFornecedor {
         String cnpj = cadastrarFornecedorDto.cnpj().trim();
 
         if (cnpj.isEmpty()) {
-            throw new ValidarCadastroException("O CNPJ é obrigatório.");
+            throw new ValidarCadastroException("Por favor, forneça o CNPJ do fornecedor. Este campo é obrigatório.");
         } else if (!cnpj.matches(CNPJ_REGEX)) {
             throw new ValidarCadastroException("O CNPJ informado não possui um formato válido. Por favor, insira o CNPJ no formato XX.XXX.XXX/XXXX-XX.");
         }
+
+        fornecedorRepository.findByCnpjFornecedor(cadastrarFornecedorDto.cnpj())
+                .ifPresent(fornecedor -> {
+                    throw new ValidarCadastroException("O CNPJ do fornecedor sugerido já possui cadastro.");
+                });
     }
 
     private void validarEndereco(CadastrarFornecedorDto cadastrarFornecedorDto) {
@@ -57,7 +64,7 @@ public class ValidarFornecedor {
         String endereco = cadastrarFornecedorDto.endereco().trim();
 
         if (endereco.isEmpty()) {
-            throw new ValidarCadastroException("O endereço é obrigatorio.");
+            throw new ValidarCadastroException("Por favor, forneça o endereço do fornecedor. Este campo é obrigatório.");
         }
     }
 
@@ -66,7 +73,7 @@ public class ValidarFornecedor {
         String telefone = cadastrarFornecedorDto.telefone().trim();
 
         if (telefone.isEmpty()) {
-            throw new ValidarCadastroException("O telefone é obrigatorio.");
+            throw new ValidarCadastroException("Por favor, forneça o telefone do fornecedor. Este campo é obrigatório.");
         } else if (!telefone.matches(TELEFONE_REGEX)) {
             throw new ValidarCadastroException("O telefone deve estar no formato (XX) XXXXX-XXXX.");
         }
@@ -77,7 +84,7 @@ public class ValidarFornecedor {
         String email = cadastrarFornecedorDto.email();
 
         if (StringUtils.isBlank(email)) {
-            throw new ValidarCadastroException("O e-mail é obrigatório.");
+            throw new ValidarCadastroException("Por favor, forneça o e-mail do fornecedor. Este campo é obrigatório.");
         }
 
         if (!emailValidator.isValid(email)) {

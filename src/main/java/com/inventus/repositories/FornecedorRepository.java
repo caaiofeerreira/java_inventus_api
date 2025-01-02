@@ -11,4 +11,7 @@ public interface FornecedorRepository extends JpaRepository<Fornecedor, Long> {
 
     @Query("SELECT f FROM Fornecedor f WHERE f.nome = :nome")
     Optional<Fornecedor> findByNomeFornecedor(@Param("nome") String nome);
+
+    @Query("SELECT f FROM Fornecedor f WHERE f.cnpj = :cnpj")
+    Optional<Fornecedor> findByCnpjFornecedor(@Param("cnpj") String cnpj);
 }

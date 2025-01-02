@@ -30,7 +30,7 @@ public class ValidarUsuario {
         String nome  = cadastrarUsuarioDto.nome().trim();
 
         if (nome.isEmpty()) {
-            throw new ValidarCadastroException("O nome é obrigatório.");
+            throw new ValidarCadastroException("Por favor, forneça o nome do usuario. Este campo é obrigatório.");
         }
 
         if (nome.length() < 3 || !cadastrarUsuarioDto.nome().matches(NOME_REGEX)) {
@@ -45,7 +45,7 @@ public class ValidarUsuario {
         });
 
         if (cadastrarUsuarioDto.email() == null || cadastrarUsuarioDto.email().isEmpty()) {
-            throw new ValidarCadastroException("O e-mail fornecido não pode ser nulo ou vazio.");
+            throw new ValidarCadastroException("OPor favor, forneça o e-mail do usuario. Este campo não pode ser nulo ou vazio.");
         } else {
             EmailValidator validator = EmailValidator.getInstance();
 
@@ -69,7 +69,7 @@ public class ValidarUsuario {
         });
 
         if (cadastrarUsuarioDto.telefone().trim().isEmpty()) {
-            throw new ValidarCadastroException("O telefone é obrigatório.");
+            throw new ValidarCadastroException("Por favor, forneça o telefone do usuario. Este campo é obrigatório.");
 
         } else if (!cadastrarUsuarioDto.telefone().matches(TELEFONE_REGEX)) {
             throw new ValidarCadastroException("O telefone deve estar no formato (XX) XXXXX-XXXX");

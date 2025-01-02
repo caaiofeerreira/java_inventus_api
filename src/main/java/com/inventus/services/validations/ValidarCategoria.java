@@ -50,7 +50,7 @@ public class ValidarCategoria {
         String descricao = cadastrarCategoriaDto.descricao().trim();
 
         if (descricao.isEmpty()) {
-            throw new ValidarCadastroException("A descriçao da categoria é obrigatório.");
+            throw new ValidarCadastroException("Por favor, forneça a descriçao da categoria. Este campo é obrigatório.");
         }
     }
 }
