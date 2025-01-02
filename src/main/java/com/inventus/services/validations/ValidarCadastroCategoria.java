@@ -1,6 +1,9 @@
 package com.inventus.services.validations;
 
 import com.inventus.domain.dto.CadastrarCategoriaDto;
+import com.inventus.domain.usuario.UserRole;
+import com.inventus.domain.usuario.Usuario;
+import com.inventus.infra.exception.AcessoRestritoException;
 import com.inventus.infra.exception.ValidarCadastroException;
 import com.inventus.repositories.CategoriaRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -8,17 +11,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidarCategoria {
+public class ValidarCadastroCategoria {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
 
     private static final String NOME_REGEX = "[A-Za-z0-9 ]+";
 
-    public void validar(CadastrarCategoriaDto cadastrarCategoriaDto) {
+    public void validar(Usuario usuario, CadastrarCategoriaDto cadastrarCategoriaDto) {
 
+        validarUsuario(usuario);
         validarNome(cadastrarCategoriaDto);
         validarDescricao(cadastrarCategoriaDto);
+    }
+
+    private void validarUsuario(Usuario usuario) {
+
+        if (usuario.getUserRole() != UserRole.ADMIN) {
+            throw new AcessoRestritoException("Apenas ADMIN podem acessar esse serviço.");
+        }
     }
 
     private void validarNome(CadastrarCategoriaDto cadastrarCategoriaDto) {

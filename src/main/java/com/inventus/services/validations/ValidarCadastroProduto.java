@@ -1,6 +1,9 @@
 package com.inventus.services.validations;
 
 import com.inventus.domain.dto.CadastrarProdutoDto;
+import com.inventus.domain.usuario.UserRole;
+import com.inventus.domain.usuario.Usuario;
+import com.inventus.infra.exception.AcessoRestritoException;
 import com.inventus.infra.exception.ValidarCadastroException;
 import com.inventus.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +12,16 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 
 @Component
-public class ValidarProduto {
+public class ValidarCadastroProduto {
 
     @Autowired
     private ProdutoRepository produtoRepository;
 
     private static final String NOME_REGEX = "[A-Za-z0-9 ]+";
 
-    public void validar(CadastrarProdutoDto cadastrarProdutoDto) {
+    public void validar(Usuario usuario, CadastrarProdutoDto cadastrarProdutoDto) {
 
+        validarUsuario(usuario);
         validarNome(cadastrarProdutoDto);
         validarCodigoProduto(cadastrarProdutoDto);
         validarQuantidade(cadastrarProdutoDto);
@@ -26,6 +30,13 @@ public class ValidarProduto {
         validarDescricao(cadastrarProdutoDto);
         validarMotivo(cadastrarProdutoDto);
 
+    }
+
+    private void validarUsuario(Usuario usuario) {
+
+        if (usuario.getUserRole() != UserRole.ADMIN) {
+            throw new AcessoRestritoException("Apenas ADMIN podem acessar esse serviço.");
+        }
     }
 
     private void validarNome(CadastrarProdutoDto cadastrarProdutoDto) {

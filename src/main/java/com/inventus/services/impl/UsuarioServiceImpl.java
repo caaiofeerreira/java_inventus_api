@@ -10,7 +10,7 @@ import com.inventus.infra.security.DadosTokenJWT;
 import com.inventus.infra.security.TokenService;
 import com.inventus.repositories.UsuarioRepository;
 import com.inventus.services.UsuarioService;
-import com.inventus.services.validations.ValidarUsuario;
+import com.inventus.services.validations.ValidarCadastroUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -38,7 +38,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private TokenService tokenService;
 
     @Autowired
-    private ValidarUsuario validarUsuario;
+    private ValidarCadastroUsuario validarUsuario;
 
     @Override
     @Transactional

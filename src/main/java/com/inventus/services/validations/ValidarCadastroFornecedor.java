@@ -1,6 +1,9 @@
 package com.inventus.services.validations;
 
 import com.inventus.domain.dto.CadastrarFornecedorDto;
+import com.inventus.domain.usuario.UserRole;
+import com.inventus.domain.usuario.Usuario;
+import com.inventus.infra.exception.AcessoRestritoException;
 import com.inventus.infra.exception.ValidarCadastroException;
 import com.inventus.repositories.FornecedorRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -9,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidarFornecedor {
+public class ValidarCadastroFornecedor {
 
     @Autowired
     private FornecedorRepository fornecedorRepository;
@@ -19,14 +22,22 @@ public class ValidarFornecedor {
     private static final String CNPJ_REGEX = "^\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}$";
     private static final EmailValidator emailValidator = EmailValidator.getInstance();
 
-    public void validar(CadastrarFornecedorDto cadastrarFornecedorDto) {
+    public void validar(Usuario usuario, CadastrarFornecedorDto cadastrarFornecedorDto) {
 
+        validarUsuario(usuario);
         validarNome(cadastrarFornecedorDto);
         validarCNPJ(cadastrarFornecedorDto);
         validarEndereco(cadastrarFornecedorDto);
         validarTelefone(cadastrarFornecedorDto);
         validarEmail(cadastrarFornecedorDto);
 
+    }
+
+    private void validarUsuario(Usuario usuario) {
+
+        if (usuario.getUserRole() != UserRole.ADMIN) {
+            throw new AcessoRestritoException("Apenas ADMIN podem acessar esse serviço.");
+        }
     }
 
     private void validarNome(CadastrarFornecedorDto cadastrarFornecedorDto) {

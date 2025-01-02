@@ -18,6 +18,7 @@ import com.inventus.repositories.FornecedorRepository;
 import com.inventus.repositories.ProdutoRepository;
 import com.inventus.services.MovimentoEstoqueService;
 import com.inventus.services.ProdutoService;
+import com.inventus.services.validations.ValidarCadastroProduto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +43,9 @@ public class ProdutoServiceImpl implements ProdutoService {
     private MovimentoEstoqueService movimentoEstoqueService;
 
     @Autowired
+    private ValidarCadastroProduto validarCadastroProduto;
+
+    @Autowired
     private TokenService tokenService;
 
     @Override
@@ -50,9 +54,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
         Usuario usuario = tokenService.getUserFromToken(token);
 
-        if (usuario.getUserRole() != UserRole.ADMIN) {
-            throw new AcessoRestritoException("Apenas ADMIN podem acessar esse serviço.");
-        }
+        validarCadastroProduto.validar(usuario, cadastrarProdutoDto);
 
         Categoria categoria = categoriaRepository
                 .findById(cadastrarProdutoDto.categoriaId())

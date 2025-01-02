@@ -10,7 +10,7 @@ import com.inventus.infra.exception.CategoriaNaoEncontradaException;
 import com.inventus.infra.security.TokenService;
 import com.inventus.repositories.CategoriaRepository;
 import com.inventus.services.CategoriaService;
-import com.inventus.services.validations.ValidarCategoria;
+import com.inventus.services.validations.ValidarCadastroCategoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     private TokenService tokenService;
 
     @Autowired
-    private ValidarCategoria validarCategoria;
+    private ValidarCadastroCategoria validarCategoria;
 
     @Override
     @Transactional
@@ -35,11 +35,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 
         Usuario usuario = tokenService.getUserFromToken(token);
 
-        if (usuario.getUserRole() != UserRole.ADMIN) {
-            throw new AcessoRestritoException("Apenas ADMIN podem acessar esse serviço.");
-        }
-
-        validarCategoria.validar(cadastrarCategoriaDto);
+        validarCategoria.validar(usuario, cadastrarCategoriaDto);
 
         Categoria categoria = Categoria.criarCategoria(
                 cadastrarCategoriaDto.nome(),
