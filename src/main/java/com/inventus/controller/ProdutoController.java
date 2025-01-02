@@ -1,7 +1,7 @@
 package com.inventus.controller;
 
-import com.inventus.domain.dto.CadastrarProdutoDto;
-import com.inventus.domain.dto.ProdutoDto;
+import com.inventus.domain.dto.produto.CadastrarProdutoDto;
+import com.inventus.domain.dto.produto.ProdutoDto;
 import com.inventus.services.ProdutoService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;

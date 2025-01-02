@@ -1,14 +1,11 @@
 package com.inventus.services.impl;
 
 import com.inventus.domain.categoria.Categoria;
-import com.inventus.domain.dto.CadastrarProdutoDto;
-import com.inventus.domain.dto.ProdutoDto;
+import com.inventus.domain.dto.produto.CadastrarProdutoDto;
+import com.inventus.domain.dto.produto.ProdutoDto;
 import com.inventus.domain.fornecedor.Fornecedor;
 import com.inventus.domain.produto.Produto;
-import com.inventus.domain.status.Status;
-import com.inventus.domain.usuario.UserRole;
 import com.inventus.domain.usuario.Usuario;
-import com.inventus.infra.exception.AcessoRestritoException;
 import com.inventus.infra.exception.CategoriaNaoEncontradaException;
 import com.inventus.infra.exception.FornecedorNaoEncontradoException;
 import com.inventus.infra.exception.ProdutoNaoEncontradoException;
@@ -24,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service

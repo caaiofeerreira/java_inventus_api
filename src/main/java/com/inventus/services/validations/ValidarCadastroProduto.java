@@ -1,6 +1,6 @@
 package com.inventus.services.validations;
 
-import com.inventus.domain.dto.CadastrarProdutoDto;
+import com.inventus.domain.dto.produto.CadastrarProdutoDto;
 import com.inventus.domain.usuario.UserRole;
 import com.inventus.domain.usuario.Usuario;
 import com.inventus.infra.exception.AcessoRestritoException;

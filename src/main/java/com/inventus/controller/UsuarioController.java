@@ -1,6 +1,6 @@
 package com.inventus.controller;
 
-import com.inventus.domain.dto.CadastrarUsuarioDto;
+import com.inventus.domain.dto.usuario.CadastrarUsuarioDto;
 import com.inventus.domain.usuario.AutenticacaoUsuario;
 import com.inventus.infra.security.DadosTokenJWT;
 import com.inventus.services.UsuarioService;

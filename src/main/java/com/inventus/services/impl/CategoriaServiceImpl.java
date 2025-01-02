@@ -1,11 +1,9 @@
 package com.inventus.services.impl;
 
 import com.inventus.domain.categoria.Categoria;
-import com.inventus.domain.dto.CadastrarCategoriaDto;
-import com.inventus.domain.dto.CategoriaDto;
-import com.inventus.domain.usuario.UserRole;
+import com.inventus.domain.dto.categoria.CadastrarCategoriaDto;
+import com.inventus.domain.dto.categoria.CategoriaDto;
 import com.inventus.domain.usuario.Usuario;
-import com.inventus.infra.exception.AcessoRestritoException;
 import com.inventus.infra.exception.CategoriaNaoEncontradaException;
 import com.inventus.infra.security.TokenService;
 import com.inventus.repositories.CategoriaRepository;

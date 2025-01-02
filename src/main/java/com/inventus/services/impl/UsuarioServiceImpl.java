@@ -1,7 +1,7 @@
 package com.inventus.services.impl;
 
-import com.inventus.domain.dto.CadastrarUsuarioDto;
-import com.inventus.domain.dto.UsuarioDto;
+import com.inventus.domain.dto.usuario.CadastrarUsuarioDto;
+import com.inventus.domain.dto.usuario.UsuarioDto;
 import com.inventus.domain.status.Status;
 import com.inventus.domain.usuario.AutenticacaoUsuario;
 import com.inventus.domain.usuario.Usuario;

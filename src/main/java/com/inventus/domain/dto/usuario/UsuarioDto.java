@@ -1,4 +1,4 @@
-package com.inventus.domain.dto;
+package com.inventus.domain.dto.usuario;
 
 import com.inventus.domain.usuario.Usuario;
 

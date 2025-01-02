@@ -1,6 +1,6 @@
 package com.inventus.services.validations;
 
-import com.inventus.domain.dto.CadastrarUsuarioDto;
+import com.inventus.domain.dto.usuario.CadastrarUsuarioDto;
 import com.inventus.infra.exception.ValidarCadastroException;
 import com.inventus.repositories.UsuarioRepository;
 import org.apache.commons.validator.routines.EmailValidator;

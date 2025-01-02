@@ -1,4 +1,4 @@
-package com.inventus.domain.dto;
+package com.inventus.domain.dto.categoria;
 
 import com.inventus.domain.categoria.Categoria;
 

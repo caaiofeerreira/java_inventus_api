@@ -1,7 +1,7 @@
 package com.inventus.services;
 
-import com.inventus.domain.dto.CadastrarProdutoDto;
-import com.inventus.domain.dto.ProdutoDto;
+import com.inventus.domain.dto.produto.CadastrarProdutoDto;
+import com.inventus.domain.dto.produto.ProdutoDto;
 
 import java.util.List;
 

@@ -1,12 +1,10 @@
 package com.inventus.services.impl;
 
-import com.inventus.domain.dto.CadastrarFornecedorDto;
-import com.inventus.domain.dto.FornecedorDto;
+import com.inventus.domain.dto.fornecedor.CadastrarFornecedorDto;
+import com.inventus.domain.dto.fornecedor.FornecedorDto;
 import com.inventus.domain.fornecedor.Fornecedor;
 import com.inventus.domain.status.Status;
-import com.inventus.domain.usuario.UserRole;
 import com.inventus.domain.usuario.Usuario;
-import com.inventus.infra.exception.AcessoRestritoException;
 import com.inventus.infra.exception.FornecedorNaoEncontradoException;
 import com.inventus.infra.security.TokenService;
 import com.inventus.repositories.FornecedorRepository;

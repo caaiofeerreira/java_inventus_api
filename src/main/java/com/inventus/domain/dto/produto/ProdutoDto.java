@@ -1,4 +1,4 @@
-package com.inventus.domain.dto;
+package com.inventus.domain.dto.produto;
 
 import com.inventus.domain.produto.Produto;
 import com.inventus.domain.status.Status;

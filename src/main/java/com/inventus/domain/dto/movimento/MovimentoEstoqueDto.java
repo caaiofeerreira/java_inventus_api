@@ -1,4 +1,4 @@
-package com.inventus.domain.dto;
+package com.inventus.domain.dto.movimento;
 
 import com.inventus.domain.movimento.MovimentoEstoque;
 import com.inventus.domain.movimento.TipoMovimento;

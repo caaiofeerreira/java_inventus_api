@@ -1,4 +1,4 @@
-package com.inventus.domain.dto;
+package com.inventus.domain.dto.fornecedor;
 
 import com.inventus.domain.fornecedor.Fornecedor;
 

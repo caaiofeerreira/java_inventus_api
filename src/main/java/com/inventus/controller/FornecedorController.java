@@ -1,7 +1,7 @@
 package com.inventus.controller;
 
-import com.inventus.domain.dto.CadastrarFornecedorDto;
-import com.inventus.domain.dto.FornecedorDto;
+import com.inventus.domain.dto.fornecedor.CadastrarFornecedorDto;
+import com.inventus.domain.dto.fornecedor.FornecedorDto;
 import com.inventus.services.FornecedorService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;

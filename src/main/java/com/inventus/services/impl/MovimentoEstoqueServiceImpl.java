@@ -1,6 +1,5 @@
 package com.inventus.services.impl;
 
-import com.inventus.domain.dto.MovimentoEstoqueDto;
 import com.inventus.domain.movimento.MovimentoEstoque;
 import com.inventus.domain.movimento.TipoMovimento;
 import com.inventus.domain.produto.Produto;
