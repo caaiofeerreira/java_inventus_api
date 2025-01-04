@@ -6,7 +6,7 @@ import com.inventus.domain.usuario.Usuario;
 import com.inventus.infra.exception.AcessoRestritoException;
 import com.inventus.infra.exception.ValidarCadastroException;
 import com.inventus.repositories.CategoriaRepository;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +48,8 @@ public class ValidarCadastroCategoria {
         categoriaRepository.findAll()
                 .forEach(categoria -> {
 
-                    int distancia = StringUtils.getLevenshteinDistance(nome, categoria.getNome().toLowerCase());
+                    LevenshteinDistance levenshteinDistance = new LevenshteinDistance();
+                    int distancia = levenshteinDistance.apply(nome.toLowerCase(), categoria.getNome().toLowerCase());
 
                     if (distancia <= 3) {
                         throw new ValidarCadastroException("Já existe uma categoria com nome similar a '" + categoria.getNome() + "'.");
