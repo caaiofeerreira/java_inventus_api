@@ -59,6 +59,14 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
+    @ExceptionHandler(MovimentoEstoqueNaoEncontradoExeption.class)
+    public ResponseEntity<ErrorResponse> handlerMovimentoEstoqueNaoEncontrado(MovimentoEstoqueNaoEncontradoExeption movimentoEstoqueNaoEncontradoExeption) {
+
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(),
+                movimentoEstoqueNaoEncontradoExeption.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
     @ExceptionHandler(ValidarCadastroException.class)
     public ResponseEntity<ErrorResponse> handlerValidarCadastro(ValidarCadastroException validarCadastroException) {
 

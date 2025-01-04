@@ -1,6 +1,8 @@
 package com.inventus.services.impl;
 
 import com.inventus.domain.categoria.Categoria;
+import com.inventus.domain.dto.categoria.CategoriaDto;
+import com.inventus.domain.dto.fornecedor.FornecedorDto;
 import com.inventus.domain.dto.produto.CadastrarProdutoDto;
 import com.inventus.domain.dto.produto.ProdutoDto;
 import com.inventus.domain.fornecedor.Fornecedor;
@@ -13,6 +15,8 @@ import com.inventus.infra.security.TokenService;
 import com.inventus.repositories.CategoriaRepository;
 import com.inventus.repositories.FornecedorRepository;
 import com.inventus.repositories.ProdutoRepository;
+import com.inventus.services.CategoriaService;
+import com.inventus.services.FornecedorService;
 import com.inventus.services.MovimentoEstoqueService;
 import com.inventus.services.ProdutoService;
 import com.inventus.services.validations.ValidarCadastroProduto;
@@ -54,11 +58,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 
         Categoria categoria = categoriaRepository
                 .findById(cadastrarProdutoDto.categoriaId())
-                .orElseThrow(() -> new CategoriaNaoEncontradaException("Categoria não encontrada."));
+                .orElseThrow(() -> new CategoriaNaoEncontradaException("A categoria informada não está registrada no sistema."));
 
         Fornecedor fornecedor = fornecedorRepository
                 .findById(cadastrarProdutoDto.fornecedorId())
-                .orElseThrow(() -> new FornecedorNaoEncontradoException("Fornecedor não encontrado."));
+                .orElseThrow(() -> new FornecedorNaoEncontradoException("O fornecedor informado não está registrado no sistema."));
 
         Produto produto = Produto.criarProduto(
                 usuario,
@@ -92,7 +96,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         List<Produto> produtos = produtoRepository.findAll();
 
         if (produtos.isEmpty()) {
-            throw new ProdutoNaoEncontradoException("Lista de produtos esta vazia.");
+            throw new ProdutoNaoEncontradoException("O estoque não possui produtos registrados no momento.");
         }
 
         return produtos.stream()
@@ -106,7 +110,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         tokenService.getUserFromToken(token);
 
         Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> new ProdutoNaoEncontradoException("Produto nao encontrado."));
+                .orElseThrow(() -> new ProdutoNaoEncontradoException("Nenhum produto registrado corresponde à busca."));
         return new ProdutoDto(produto);
     }
 }

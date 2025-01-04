@@ -60,7 +60,7 @@ public class FornecedorServiceImpl implements FornecedorService {
         List<Fornecedor> fornecedores = fornecedorRepository.findAll();
 
         if (fornecedores.isEmpty()) {
-            throw new FornecedorNaoEncontradoException("Lista de Fornecedores esta vazia.");
+            throw new FornecedorNaoEncontradoException("O estoque não possui fornecedores registrados no momento.");
         }
 
         return fornecedores.stream()
@@ -74,7 +74,7 @@ public class FornecedorServiceImpl implements FornecedorService {
         tokenService.getUserFromToken(token);
 
         Fornecedor fornecedor = fornecedorRepository.findById(id)
-                .orElseThrow(() -> new FornecedorNaoEncontradoException("Fornecedor não encontrado."));
+                .orElseThrow(() -> new FornecedorNaoEncontradoException("Nenhum fornecedor registrado corresponde à busca"));
 
         return new FornecedorDto(fornecedor);
     }

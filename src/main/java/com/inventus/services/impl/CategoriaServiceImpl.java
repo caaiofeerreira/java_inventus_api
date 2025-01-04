@@ -53,7 +53,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         List<Categoria> categorias = categoriaRepository.findAll();
 
         if (categorias.isEmpty()) {
-            throw new CategoriaNaoEncontradaException("Lista de Categorias vazia.");
+            throw new CategoriaNaoEncontradaException("O estoque não possui categorias registradas no momento.");
         }
 
         return categorias.stream()
@@ -67,7 +67,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         tokenService.getUserFromToken(token);
 
         Categoria categoria = categoriaRepository.findById(id)
-                .orElseThrow(() -> new CategoriaNaoEncontradaException("Categoria não encontrada."));
+                .orElseThrow(() -> new CategoriaNaoEncontradaException("Nenhuma categoria registrada corresponde à busca."));
 
         return new CategoriaDto(categoria);
     }
