@@ -82,4 +82,28 @@ public class ResourceExceptionHandler {
                 estoqueInsuficienteException.getMessage(), LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
+
+    @ExceptionHandler(MovimentoInvalidoException.class)
+    public ResponseEntity<ErrorResponse> handlerMovimentoInvalido(MovimentoInvalidoException movimentoInvalidoException) {
+
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+                movimentoInvalidoException.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(CargoInvalidoException.class)
+    public ResponseEntity<ErrorResponse> handlerCargoInvalido(CargoInvalidoException cargoInvalidoException) {
+
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+                cargoInvalidoException.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(InventusStatusException.class)
+    public ResponseEntity<ErrorResponse> handlerInventusStatus(InventusStatusException inventusStatusException) {
+
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+                inventusStatusException.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
 }

@@ -1,6 +1,7 @@
 package com.inventus.domain.usuario;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.inventus.infra.exception.CargoInvalidoException;
 
 public enum UserRole {
     ADMIN,
@@ -11,7 +12,7 @@ public enum UserRole {
     public static UserRole fromString(String value) {
 
         if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("O campo userRole não pode ser nulo ou vazio.");
+            throw new CargoInvalidoException("O campo userRole não pode ser nulo ou vazio.");
         }
 
         for (UserRole userRole : UserRole.values()) {
@@ -19,6 +20,6 @@ public enum UserRole {
                 return userRole;
             }
         }
-        throw new IllegalArgumentException("Por favor, escolha um tipo de usuário válido: ADMIN, SUPERVISOR ou FUNCIONARIO.");
+        throw new CargoInvalidoException("Por favor, escolha um tipo de usuário válido: ADMIN, SUPERVISOR ou FUNCIONARIO.");
     }
 }

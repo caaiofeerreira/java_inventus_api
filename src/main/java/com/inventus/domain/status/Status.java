@@ -1,6 +1,7 @@
 package com.inventus.domain.status;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.inventus.infra.exception.InventusStatusException;
 
 public enum Status {
     ATIVO,
@@ -10,7 +11,7 @@ public enum Status {
     public static Status fromString(String value) {
 
         if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("O campo status não pode ser nulo ou vazio.");
+            throw new InventusStatusException("O campo status não pode ser nulo ou vazio.");
         }
 
         for (Status status : Status.values()) {
@@ -18,6 +19,6 @@ public enum Status {
                 return status;
             }
         }
-        throw new IllegalArgumentException("Por favor, escolha um tipo de status válido: ATIVO ou INATIVO.");
+        throw new InventusStatusException("Por favor, escolha um tipo de status válido: ATIVO ou INATIVO.");
     }
 }

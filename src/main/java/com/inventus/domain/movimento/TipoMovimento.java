@@ -1,6 +1,7 @@
 package com.inventus.domain.movimento;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.inventus.infra.exception.MovimentoInvalidoException;
 
 public enum TipoMovimento {
     ENTRADA,
@@ -10,7 +11,7 @@ public enum TipoMovimento {
     public static TipoMovimento fromString(String value) {
 
         if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("O campo Tipo Movimento não pode ser nulo ou vazio.");
+            throw new MovimentoInvalidoException("O campo Tipo Movimento não pode ser nulo ou vazio.");
         }
 
         for (TipoMovimento tipoMovimento : TipoMovimento.values()) {
@@ -18,6 +19,6 @@ public enum TipoMovimento {
                 return tipoMovimento;
             }
         }
-        throw new IllegalArgumentException("Por favor, escolha um tipo de movimento válido: ENTRADA ou SAIDA.");
+        throw new MovimentoInvalidoException("Por favor, escolha um tipo de movimento válido: ENTRADA ou SAIDA.");
     }
 }
