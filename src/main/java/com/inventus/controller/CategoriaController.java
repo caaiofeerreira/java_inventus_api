@@ -29,7 +29,7 @@ public class CategoriaController {
 
     @GetMapping("/listar")
     @PreAuthorize("hasRole('ADMIN','SUPERVISOR', 'FUNCIONARIO')")
-    public ResponseEntity<List<CategoriaDto>> listarCategorias(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<CategoriaDto>> listar(@RequestHeader("Authorization") String token) {
 
         List<CategoriaDto> categorias = categoriaService.listarCategorias(token);
         return ResponseEntity.ok(categorias);

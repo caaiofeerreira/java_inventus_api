@@ -2,6 +2,7 @@ package com.inventus.controller;
 
 import com.inventus.domain.dto.produto.CadastrarProdutoDto;
 import com.inventus.domain.dto.produto.ProdutoDto;
+import com.inventus.domain.dto.produto.QuantidadeProdutoDto;
 import com.inventus.services.ProdutoService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,14 @@ public class ProdutoController {
 
         ProdutoDto produto = produtoService.buscarProduto(token, id);
         return ResponseEntity.ok(produto);
+    }
+
+    @PutMapping("/atualizar")
+    @PreAuthorize("hasRole('ADMIN','SUPERVISOR')")
+    public ResponseEntity<ProdutoDto> atualizarQuantidade(@RequestHeader("Authorization") String token,
+                                                          @RequestBody QuantidadeProdutoDto quantidadeProdutoDto) {
+
+        ProdutoDto produto = produtoService.atualizarQuantidadeProduto(token, quantidadeProdutoDto);
+        return ResponseEntity.status(HttpServletResponse.SC_OK).body(produto);
     }
 }

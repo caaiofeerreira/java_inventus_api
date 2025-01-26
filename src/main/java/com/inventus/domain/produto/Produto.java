@@ -4,6 +4,7 @@ import com.inventus.domain.categoria.Categoria;
 import com.inventus.domain.fornecedor.Fornecedor;
 import com.inventus.domain.status.Status;
 import com.inventus.domain.usuario.Usuario;
+import com.inventus.infra.exception.EstoqueInsuficienteException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,7 +33,7 @@ public class Produto {
     @Column(name = "codigo_produto", unique = true)
     private String codigoProduto;
 
-    private Integer quantidade;
+    private int quantidade;
     private String unidadeMedida;
     private BigDecimal precoCompra;
     private String descricao;
@@ -50,7 +51,7 @@ public class Produto {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public static Produto criarProduto(Usuario usuario, String nome, String codigoProduto, Integer quantidade,
+    public static Produto criarProduto(Usuario usuario, String nome, String codigoProduto, int quantidade,
                                        String unidadeMedida, BigDecimal precoCompra, String descricao,
                                        Categoria categoria, Fornecedor fornecedor) {
 
@@ -67,5 +68,29 @@ public class Produto {
         produto.setDataCadastro(LocalDate.now());
         produto.setStatus(Status.ATIVO);
         return produto;
+    }
+
+    public void entradaEstoque(Integer quantidade) {
+
+        validarQuantidade(quantidade);
+        this.quantidade += quantidade;
+    }
+
+    public void saidaEstoque(Integer quantidade) {
+
+        validarQuantidade(quantidade);
+
+        if (this.quantidade < quantidade) {
+            throw new EstoqueInsuficienteException("Quantidade de saída maior que a disponível no estoque. Estoque atual: " + this.quantidade);
+        }
+
+        this.quantidade -= quantidade;
+    }
+
+    private void validarQuantidade(Integer quantidade) {
+
+        if (quantidade == null || quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade deve ser positiva e maior que zero.");
+        }
     }
 }

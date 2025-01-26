@@ -27,18 +27,20 @@ public class MovimentoEstoqueServiceImpl implements MovimentoEstoqueService {
 
     @Override
     @Transactional
-    public void registrarEntrada(Usuario usuario, Produto produto, Integer quantidade, String motivo) {
+    public void registrarMovimento(Usuario usuario, Produto produto, int quantidade, TipoMovimento tipoMovimento, String motivo) {
 
         MovimentoEstoque movimentoEstoque = MovimentoEstoque.criarMovimento(
                 usuario,
                 produto,
                 quantidade,
-                TipoMovimento.ENTRADA,
+                tipoMovimento,
                 LocalDateTime.now(),
                 motivo
         );
 
         movimentoEstoqueRepository.save(movimentoEstoque);
+
+        new MovimentoEstoqueDto(movimentoEstoque);
     }
 
     @Override

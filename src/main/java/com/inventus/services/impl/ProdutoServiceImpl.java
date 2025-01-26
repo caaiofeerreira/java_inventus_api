@@ -1,11 +1,11 @@
 package com.inventus.services.impl;
 
 import com.inventus.domain.categoria.Categoria;
-import com.inventus.domain.dto.categoria.CategoriaDto;
-import com.inventus.domain.dto.fornecedor.FornecedorDto;
 import com.inventus.domain.dto.produto.CadastrarProdutoDto;
 import com.inventus.domain.dto.produto.ProdutoDto;
+import com.inventus.domain.dto.produto.QuantidadeProdutoDto;
 import com.inventus.domain.fornecedor.Fornecedor;
+import com.inventus.domain.movimento.TipoMovimento;
 import com.inventus.domain.produto.Produto;
 import com.inventus.domain.usuario.Usuario;
 import com.inventus.infra.exception.CategoriaNaoEncontradaException;
@@ -15,8 +15,6 @@ import com.inventus.infra.security.TokenService;
 import com.inventus.repositories.CategoriaRepository;
 import com.inventus.repositories.FornecedorRepository;
 import com.inventus.repositories.ProdutoRepository;
-import com.inventus.services.CategoriaService;
-import com.inventus.services.FornecedorService;
 import com.inventus.services.MovimentoEstoqueService;
 import com.inventus.services.ProdutoService;
 import com.inventus.services.validations.ValidarCadastroProduto;
@@ -78,10 +76,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 
         Produto novoProduto = produtoRepository.save(produto);
 
-        movimentoEstoqueService.registrarEntrada(
+        movimentoEstoqueService.registrarMovimento(
                 usuario,
                 novoProduto,
                 cadastrarProdutoDto.quantidade(),
+                cadastrarProdutoDto.tipoMovimento(),
                 cadastrarProdutoDto.motivo()
         );
 
@@ -112,5 +111,32 @@ public class ProdutoServiceImpl implements ProdutoService {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new ProdutoNaoEncontradoException("Nenhum produto registrado corresponde à busca."));
         return new ProdutoDto(produto);
+    }
+
+    @Override
+    public ProdutoDto atualizarQuantidadeProduto(String token, QuantidadeProdutoDto quantidadeProdutoDto) {
+
+        Usuario usuario = tokenService.getUserFromToken(token);
+
+        Produto produto = produtoRepository.findById(quantidadeProdutoDto.id())
+                .orElseThrow(() -> new ProdutoNaoEncontradoException("Produto não encontrado."));
+
+        if (quantidadeProdutoDto.tipoMovimento() == TipoMovimento.ENTRADA) {
+            produto.entradaEstoque(quantidadeProdutoDto.quantidade());
+        } else {
+            produto.saidaEstoque(quantidadeProdutoDto.quantidade());
+        }
+
+        Produto produtoAtualizado = produtoRepository.save(produto);
+
+        movimentoEstoqueService.registrarMovimento(
+                usuario,
+                produtoAtualizado,
+                quantidadeProdutoDto.quantidade(),
+                quantidadeProdutoDto.tipoMovimento(),
+                quantidadeProdutoDto.motivo()
+        );
+
+        return new ProdutoDto(produtoAtualizado);
     }
 }

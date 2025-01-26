@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public record ProdutoDto(Long id,
                          String nome,
                          String codigoProduto,
-                         Integer quantidade,
+                         int quantidade,
                          String unidadeMedida,
                          BigDecimal precoCompra,
                          String descricao,
