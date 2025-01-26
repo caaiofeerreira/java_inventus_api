@@ -14,4 +14,6 @@ public interface MovimentoEstoqueService {
     List<MovimentoEstoqueDto> listarMovimentos(String token);
 
     MovimentoEstoqueDto buscarMovimento(String token, Long id);
+
+    List<MovimentoEstoqueDto> listarMovimentosProduto(String token, Long id);
 }

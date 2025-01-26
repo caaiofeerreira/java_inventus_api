@@ -69,4 +69,20 @@ public class MovimentoEstoqueServiceImpl implements MovimentoEstoqueService {
 
         return new MovimentoEstoqueDto(movimento);
     }
+
+    @Override
+    public List<MovimentoEstoqueDto> listarMovimentosProduto(String token, Long id) {
+
+        tokenService.getUserFromToken(token);
+
+        List<MovimentoEstoque> movimentosProduto = movimentoEstoqueRepository.findByProdutoId(id);
+
+        if (movimentosProduto.isEmpty()) {
+            throw new MovimentoEstoqueNaoEncontradoExeption("Não foram encontradas movimentações de estoque para o produto com ID " + id +".");
+        }
+
+        return movimentosProduto.stream()
+                .map(MovimentoEstoqueDto::new)
+                .toList();
+    }
 }

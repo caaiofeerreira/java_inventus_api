@@ -32,4 +32,13 @@ public class MovimentoEstoqueController {
         MovimentoEstoqueDto movimento = movimentoEstoqueService.buscarMovimento(token, id);
         return ResponseEntity.ok(movimento);
     }
+
+    @GetMapping("/buscar/produto/{id}")
+    @PreAuthorize("hasRole('ADMIN','SUPERVISOR', 'FUNCIONARIO')")
+    public ResponseEntity<List<MovimentoEstoqueDto>> listarMovimentos(@RequestHeader("Authorization") String token,
+                                                                      @PathVariable Long id) {
+
+        List<MovimentoEstoqueDto> movimento = movimentoEstoqueService.listarMovimentosProduto(token, id);
+        return ResponseEntity.ok(movimento);
+    }
 }
