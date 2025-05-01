@@ -1,6 +1,7 @@
 package com.inventus.services.impl;
 
 import com.inventus.domain.categoria.Categoria;
+import com.inventus.domain.dto.produto.CodigoProdutoDto;
 import com.inventus.domain.dto.produto.CadastrarProdutoDto;
 import com.inventus.domain.dto.produto.ProdutoDto;
 import com.inventus.domain.dto.produto.QuantidadeProdutoDto;
@@ -138,5 +139,16 @@ public class ProdutoServiceImpl implements ProdutoService {
         );
 
         return new ProdutoDto(produtoAtualizado);
+    }
+
+    @Override
+    public ProdutoDto buscarCodigoProduto(String token, CodigoProdutoDto codigoProdutoDto) {
+
+        tokenService.getUserFromToken(token);
+
+        Produto produto = produtoRepository.findByCodigoProduto(codigoProdutoDto.codigoProduto())
+                .orElseThrow(() -> new ProdutoNaoEncontradoException("Codigo do produto não encontrado."));
+
+        return new ProdutoDto(produto);
     }
 }

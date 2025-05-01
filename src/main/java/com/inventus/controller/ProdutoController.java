@@ -1,5 +1,6 @@
 package com.inventus.controller;
 
+import com.inventus.domain.dto.produto.CodigoProdutoDto;
 import com.inventus.domain.dto.produto.CadastrarProdutoDto;
 import com.inventus.domain.dto.produto.ProdutoDto;
 import com.inventus.domain.dto.produto.QuantidadeProdutoDto;
@@ -52,5 +53,14 @@ public class ProdutoController {
 
         ProdutoDto produto = produtoService.atualizarQuantidadeProduto(token, quantidadeProdutoDto);
         return ResponseEntity.status(HttpServletResponse.SC_OK).body(produto);
+    }
+
+    @GetMapping("/buscar/codigo/{codigoProduto}")
+    @PreAuthorize("hasRole('ADMIN','SUPERVISOR', 'FUNCIONARIO')")
+    public ResponseEntity<ProdutoDto> buscarCodigo(@RequestHeader("Authorization") String token,
+                                                   @PathVariable String codigoProduto) {
+
+        ProdutoDto produtoDto = produtoService.buscarCodigoProduto(token, new CodigoProdutoDto(codigoProduto));
+        return ResponseEntity.status(HttpServletResponse.SC_OK).body(produtoDto);
     }
 }
